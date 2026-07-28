@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/FacilityInspectionTracker.Api/FacilityInspectionTracker.Api.csproj" />
+    <Project Path="src/FacilityInspectionTracker.Core/FacilityInspectionTracker.Core.csproj" />
+    <Project Path="src/FacilityInspectionTracker.Infrastructure/FacilityInspectionTracker.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/FacilityInspectionTracker.Tests/FacilityInspectionTracker.Tests.csproj" />
+  </Folder>
+</Solution>
