@@ -1,6 +1,67 @@
 @FacilityInspectionTracker.Api_HostAddress = http://localhost:5077
 
-GET {{FacilityInspectionTracker.Api_HostAddress}}/weatherforecast/
+### GET all facilities
+# Returns a list of all active TDCJ facilities.
+GET {{FacilityInspectionTracker.Api_HostAddress}}/api/facilities
 Accept: application/json
+
+###
+
+### GET facility by ID
+# Returns a single facility matching the given ID. Returns 404 if not found.
+GET {{FacilityInspectionTracker.Api_HostAddress}}/api/facilities/1
+Accept: application/json
+
+###
+
+### GET inspection report for a facility
+# Returns a summary inspection report for the given facility ID. Returns 404 if not found.
+GET {{FacilityInspectionTracker.Api_HostAddress}}/api/facilities/1/inspection-report
+Accept: application/json
+
+###
+
+### GET all inspections
+# Returns a list of all inspections across all facilities.
+GET {{FacilityInspectionTracker.Api_HostAddress}}/api/inspections
+Accept: application/json
+
+###
+
+### GET inspections by facility ID
+# Returns all inspections associated with the given facility ID.
+GET {{FacilityInspectionTracker.Api_HostAddress}}/api/inspections/facility/1
+Accept: application/json
+
+###
+
+### GET inspection by ID
+# Returns a single inspection matching the given ID. Returns 404 if not found.
+GET {{FacilityInspectionTracker.Api_HostAddress}}/api/inspections/1
+Accept: application/json
+
+###
+
+### POST schedule a new inspection
+# Schedules a new inspection for a facility. Returns 201 Created with the new inspection on success.
+# Returns 400 Bad Request if the facility does not exist.
+POST {{FacilityInspectionTracker.Api_HostAddress}}/api/inspections
+Content-Type: application/json
+
+{
+  "facilityId": 1,
+  "inspectorName": "Jane Smith",
+  "inspectionType": "Fire Safety",
+  "scheduledDate": "2026-09-01T09:00:00",
+  "priority": "High",
+  "notes": "Annual fire safety review"
+}
+
+###
+
+### DELETE (cancel) an inspection
+# Cancels the scheduled inspection with the given ID. Returns 204 No Content on success.
+# Returns 404 if the inspection is not found or cannot be cancelled.
+DELETE {{FacilityInspectionTracker.Api_HostAddress}}/api/inspections/2/cancel
 
 ###
