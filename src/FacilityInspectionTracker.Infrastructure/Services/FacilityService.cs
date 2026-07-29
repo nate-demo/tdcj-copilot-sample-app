@@ -79,9 +79,9 @@ public class FacilityService : IFacilityService
                 Inspections = inspections
             };
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            return null;
+            throw new InvalidOperationException($"Failed to build inspection report for facility {facilityId}.", ex);
         }
     }
 }
