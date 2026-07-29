@@ -1,0 +1,52 @@
+name: Weekly Sunday Demo
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'  # Runs every Sunday at midnight UTC
+  workflow_dispatch:       # Allow manual triggering for testing
+
+jobs:
+  demo:
+    name: Bash Demo Commands
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Display current date and time
+        run: |
+          echo "Current date and time: $(date)"
+
+      - name: Print system info
+        run: |
+          echo "=== System Information ==="
+          echo "Hostname: $(hostname)"
+          echo "OS: $(uname -a)"
+          echo "CPU cores: $(nproc)"
+          echo "Memory: $(free -h | awk '/^Mem:/ {print $2}')"
+          echo "Disk usage: $(df -h / | awk 'NR==2 {print $3 " used of " $2}')"
+
+      - name: List repository files
+        run: |
+          echo "=== Repository Root Contents ==="
+          ls -la
+
+      - name: Count lines of code
+        run: |
+          echo "=== Lines of Code ==="
+          find . -name '*.cs' -not -path './.git/*' | xargs wc -l | tail -1
+
+      - name: Display environment variables
+        run: |
+          echo "=== Key Environment Variables ==="
+          echo "GITHUB_WORKFLOW: $GITHUB_WORKFLOW"
+          echo "GITHUB_RUN_NUMBER: $GITHUB_RUN_NUMBER"
+          echo "GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
+          echo "GITHUB_SHA: $GITHUB_SHA"
+          echo "GITHUB_REF: $GITHUB_REF"
+
+      - name: Echo completion message
+        run: echo "Weekly demo workflow completed successfully on $(date)!"
