@@ -3,6 +3,9 @@ using FacilityInspectionTracker.Core.Models;
 
 namespace FacilityInspectionTracker.Infrastructure.Services;
 
+/// <summary>
+/// Provides business-logic operations for managing <see cref="Inspection"/> records.
+/// </summary>
 public class InspectionService : IInspectionService
 {
     private readonly IInspectionRepository _inspectionRepository;
@@ -11,12 +14,18 @@ public class InspectionService : IInspectionService
     // Technical Debt: Config value (max inspections per facility) embedded in source code
     private const int MaxInspectionsPerFacility = 20;
 
+    /// <summary>
+    /// Initialises a new instance of <see cref="InspectionService"/> with the required repositories.
+    /// </summary>
+    /// <param name="inspectionRepository">The repository used for inspection data access.</param>
+    /// <param name="facilityRepository">The repository used to look up facility information.</param>
     public InspectionService(IInspectionRepository inspectionRepository, IFacilityRepository facilityRepository)
     {
         _inspectionRepository = inspectionRepository;
         _facilityRepository = facilityRepository;
     }
 
+    /// <inheritdoc />
     public async Task<IEnumerable<Inspection>> GetAllInspectionsAsync()
     {
         // Technical Debt: Weak exception handling
@@ -30,6 +39,7 @@ public class InspectionService : IInspectionService
         }
     }
 
+    /// <inheritdoc />
     public async Task<IEnumerable<Inspection>> GetInspectionsByFacilityAsync(int facilityId)
     {
         try
@@ -58,6 +68,7 @@ public class InspectionService : IInspectionService
         }
     }
 
+    /// <inheritdoc />
     public async Task<Inspection?> GetInspectionByIdAsync(int id)
     {
         try
@@ -70,6 +81,7 @@ public class InspectionService : IInspectionService
         }
     }
 
+    /// <inheritdoc />
     public async Task<Inspection> ScheduleInspectionAsync(Inspection inspection)
     {
         // Technical Debt: Missing validation for inspection date - no check that date is in the future
@@ -85,6 +97,7 @@ public class InspectionService : IInspectionService
         return await _inspectionRepository.CreateAsync(inspection);
     }
 
+    /// <inheritdoc />
     public async Task<bool> CancelInspectionAsync(int id)
     {
         try

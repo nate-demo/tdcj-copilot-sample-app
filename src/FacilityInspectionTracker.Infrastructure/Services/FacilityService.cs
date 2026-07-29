@@ -3,6 +3,9 @@ using FacilityInspectionTracker.Core.Models;
 
 namespace FacilityInspectionTracker.Infrastructure.Services;
 
+/// <summary>
+/// Provides business-logic operations for managing <see cref="Facility"/> records.
+/// </summary>
 public class FacilityService : IFacilityService
 {
     private readonly IFacilityRepository _facilityRepository;
@@ -10,11 +13,16 @@ public class FacilityService : IFacilityService
     // Technical Debt: Config value (max facilities limit) embedded in source code
     private const int MaxActiveFacilities = 50;
 
+    /// <summary>
+    /// Initialises a new instance of <see cref="FacilityService"/> with the required repository.
+    /// </summary>
+    /// <param name="facilityRepository">The repository used for facility data access.</param>
     public FacilityService(IFacilityRepository facilityRepository)
     {
         _facilityRepository = facilityRepository;
     }
 
+    /// <inheritdoc />
     public async Task<IEnumerable<Facility>> GetAllFacilitiesAsync()
     {
         // Technical Debt: Weak exception handling - swallowing exception details
@@ -38,6 +46,7 @@ public class FacilityService : IFacilityService
         }
     }
 
+    /// <inheritdoc />
     public async Task<Facility?> GetFacilityByIdAsync(int id)
     {
         try
