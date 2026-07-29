@@ -4,27 +4,39 @@ using FacilityInspectionTracker.Infrastructure.Data;
 
 namespace FacilityInspectionTracker.Infrastructure.Repositories;
 
+/// <summary>
+/// In-memory implementation of <see cref="IFacilityRepository"/>.
+/// Data is seeded from <see cref="SeedData"/> at startup and persists for the lifetime
+/// of the singleton instance.
+/// </summary>
 public class FacilityRepository : IFacilityRepository
 {
     // Technical Debt: In-memory store; connection string is hardcoded elsewhere
     private readonly List<Facility> _facilities;
 
+    /// <summary>
+    /// Initialises a new instance of <see cref="FacilityRepository"/> and seeds it with
+    /// sample facility data.
+    /// </summary>
     public FacilityRepository()
     {
         _facilities = SeedData.GetFacilities();
     }
 
+    /// <inheritdoc />
     public Task<IEnumerable<Facility>> GetAllAsync()
     {
         return Task.FromResult<IEnumerable<Facility>>(_facilities.Where(f => f.IsActive).ToList());
     }
 
+    /// <inheritdoc />
     public Task<Facility?> GetByIdAsync(int id)
     {
         var facility = _facilities.FirstOrDefault(f => f.Id == id);
         return Task.FromResult(facility);
     }
 
+    /// <inheritdoc />
     public Task<Facility> CreateAsync(Facility facility)
     {
         facility.Id = _facilities.Max(f => f.Id) + 1;
@@ -33,6 +45,7 @@ public class FacilityRepository : IFacilityRepository
         return Task.FromResult(facility);
     }
 
+    /// <inheritdoc />
     public Task<Facility?> UpdateAsync(Facility facility)
     {
         var existing = _facilities.FirstOrDefault(f => f.Id == facility.Id);
@@ -49,6 +62,7 @@ public class FacilityRepository : IFacilityRepository
         return Task.FromResult<Facility?>(existing);
     }
 
+    /// <inheritdoc />
     public Task<bool> DeleteAsync(int id)
     {
         var facility = _facilities.FirstOrDefault(f => f.Id == id);

@@ -2,8 +2,14 @@ using FacilityInspectionTracker.Core.Models;
 
 namespace FacilityInspectionTracker.Infrastructure.Data;
 
+/// <summary>
+/// Provides static sample data used to seed the in-memory repositories at application startup.
+/// </summary>
 public static class SeedData
 {
+    /// <summary>
+    /// Returns a list of sample <see cref="Facility"/> records representing TDCJ units.
+    /// </summary>
     public static List<Facility> GetFacilities()
     {
         return new List<Facility>
@@ -76,6 +82,10 @@ public static class SeedData
         };
     }
 
+    /// <summary>
+    /// Returns a list of sample <see cref="Inspection"/> records spanning multiple facilities
+    /// and covering all <see cref="InspectionStatus"/> values.
+    /// </summary>
     public static List<Inspection> GetInspections()
     {
         return new List<Inspection>
