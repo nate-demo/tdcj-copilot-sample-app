@@ -40,4 +40,20 @@ public class FacilitiesController : ControllerBase
 
         return Ok(facility);
     }
+
+    /// <summary>
+    /// Retrieves an inspection report for a specific facility.
+    /// </summary>
+    /// <param name="id">The facility ID.</param>
+    [HttpGet("{id:int}/inspection-report")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetInspectionReport(int id)
+    {
+        var report = await _facilityService.GetInspectionReportAsync(id);
+        if (report is null)
+            return NotFound(new { message = $"Facility {id} not found." });
+
+        return Ok(report);
+    }
 }
