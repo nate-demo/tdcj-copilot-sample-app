@@ -6,5 +6,4 @@ public interface IFacilityService
 {
     Task<IEnumerable<Facility>> GetAllFacilitiesAsync();
     Task<Facility?> GetFacilityByIdAsync(int id);
-    Task<InspectionReport?> GetInspectionReportAsync(int facilityId);
 }
